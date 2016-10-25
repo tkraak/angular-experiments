@@ -1,3 +1,5 @@
 extends(src='layout.sgr')
   block(name='content')
-    h2 Hello World!
+    h2 Hello dayparts!
+
+    angular-dayparts(options='options')

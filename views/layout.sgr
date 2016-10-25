@@ -14,10 +14,13 @@ html
     block(name='stylesheets')
       link(rel='stylesheet' href='css/index.css')
 
-  body(role='document')
+  body(role='document' ng-controller='MainCtrl')
     main(role='main' id='{{ pageId }}')
       block(name='content')
 
     block(name='javascript')
-      script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js')
+      script(src='vendor/jquery.min.js')
+      script(src='vendor/underscore-min.js')
+      script(src='vendor/angular.min.js')
+      script(src='vendor/angular-dayparts.js')
       script(src='js/main.js' defer)

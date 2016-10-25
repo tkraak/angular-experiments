@@ -6,6 +6,7 @@ const pageId = require('spike-page-id')
 
 module.exports = {
   devtool: 'source-map',
+  vendor: 'assets/vendor/**',
   matchers: {
     html: '*(**/)*.sgr',
     css: '*(**/)*.sss'
