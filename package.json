@@ -8,6 +8,7 @@
   },
   "bugs": "https://github.com/tkraak/dayparts/issues",
   "dependencies": {
+    "angular-dayparts": "^0.2.8",
     "babel-preset-latest": "^6.14.0",
     "hard-source-webpack-plugin": "0.0.38",
     "reshape-standard": "^0.4.0",
