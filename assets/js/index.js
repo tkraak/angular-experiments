@@ -1,4 +1,4 @@
-angular.module('dayparts', ['angular-dayparts'])
+angular.module('dayparts', ['angular-dayparts', 'mgcrea.ngStrap', 'mgcrea.ngStrap.tooltip'])
   .controller('MainCtrl', ['$scope', function($scope) {
 
     $scope.options = {

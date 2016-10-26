@@ -22,5 +22,7 @@ html
       script(src='vendor/jquery.min.js')
       script(src='vendor/underscore-min.js')
       script(src='vendor/angular.min.js')
+      script(src='vendor/angular-strap.min.js')
+      script(src='vendor/angular-strap.tpl.min.js')
       script(src='vendor/angular-dayparts.js')
       script(src='js/main.js' defer)
