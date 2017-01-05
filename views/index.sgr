@@ -1,5 +1,12 @@
 extends(src='layout.sgr')
   block(name='content')
-    h2 Hello dayparts!
 
-    angular-dayparts(options='options')
+    div#tooltip(bs-tooltip='tooltip')
+      angular-dayparts(options='options')
+
+    div.well
+      p
+        | Here is 
+        a(href='#'
+          bs-tooltip='tooltip'
+          data-placement='top') another tooltip.
