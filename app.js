@@ -1,6 +1,7 @@
 const path = require('path')
 const htmlStandards = require('reshape-standard')
 const cssStandards = require('spike-css-standards')
+const placehold = require('postcss-placehold')
 const jsStandards = require('babel-preset-latest')
 const pageId = require('spike-page-id')
 
@@ -19,7 +20,9 @@ module.exports = {
     })
   },
   postcss: (ctx) => {
-    return cssStandards({ webpack: ctx })
+    const css = cssStandards({ webpack: ctx })
+    css.plugins.push(placehold())
+    return css
   },
   babel: { presets: [jsStandards] },
   server: { open: false }
