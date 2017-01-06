@@ -15,6 +15,7 @@ html
       link(rel='stylesheet' href='vendor/bootstrap.min.css')
       link(rel='stylesheet' href='vendor/bootstrap-additions.min.css')
       link(rel='stylesheet' href='vendor/angular-motion.min.css')
+      link(rel='stylesheet' href='vendor/one-components.css')
       link(rel='stylesheet' href='css/index.css')
 
   body(role='document' ng-controller='MainCtrl')
@@ -29,4 +30,5 @@ html
       script(src='vendor/angular-strap.min.js')
       script(src='vendor/angular-strap.tpl.min.js')
       script(src='vendor/angular-dayparts.js')
+      script(src='vendor/collapse.js')
       script(src='js/main.js' defer)

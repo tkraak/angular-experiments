@@ -1,7 +1,8 @@
-angular.module('dayparts', ['angular-dayparts',
-                            'ngAnimate',
-                            'mgcrea.ngStrap',
-                            'mgcrea.ngStrap.tooltip'])
+angular.module('app', ['angular-dayparts',
+                       'collapse',
+                       'ngAnimate',
+                       'mgcrea.ngStrap',
+                       'mgcrea.ngStrap.tooltip'])
   .controller('MainCtrl', ['$scope', function($scope) {
 
     $scope.options = {
@@ -35,5 +36,5 @@ angular.module('dayparts', ['angular-dayparts',
   })
 
 angular.element(document).ready(function() {
-  angular.bootstrap(document, ['dayparts'])
+  angular.bootstrap(document, ['app'])
 })

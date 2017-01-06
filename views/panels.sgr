@@ -1,0 +1,19 @@
+extends(src='layout.sgr')
+  block(name='title')
+    title Panels
+  block(name='content')
+    .col-md-6
+      collapse(title='Directive Title')
+        p Unit tests, integration tests, and functional tests are all types of automated tests which form essential cornerstones of continuous delivery, a development methodology that allows you to safely ship changes to production in days or hours rather than months or years.
+        p Automated tests enhance software stability by catching more errors before software reaches the end user. They provide a safety net that allows developers to make changes without fear that they will unknowingly break something in the process.
+        p Contrary to popular intuition, maintaining a quality test suite can dramatically enhance developer productivity by catching errors immediately. Without them, end users encounter more bugs, which can lead to increased reliance on customer service, quality assurance teams, and bug reports.
+      .panel
+        .panel-heading
+          .panel-heading-left
+            h2 Standard Panel
+          .panel-heading-right
+            button(class='btn btn-default') Secondary Button
+            button(class='btn btn-primary') Primary Button
+        .panel-body
+          This is the panel content.
+

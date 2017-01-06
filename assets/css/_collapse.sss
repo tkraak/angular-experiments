@@ -1,0 +1,24 @@
+.collapsible
+  border: 1px solid gray
+  margin-bottom: 50px
+
+.collapsible > section
+  overflow: hidden
+  max-height: 0
+  transition: max-height 0.7s ease-in-out
+
+.collapsible > section > p
+  margin: 0
+  padding: 5px
+
+.collapsible > section.opened
+  transition: max-height 0.9s ease-in-out
+  max-height: 300px
+
+.collapsible > header
+  border-bottom: 1px solid green
+  cursor: pointer
+
+.collapsible > header h4
+  margin: 0
+
