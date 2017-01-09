@@ -11,6 +11,7 @@
     "angular-dayparts": "^0.2.8",
     "babel-preset-latest": "^6.14.0",
     "hard-source-webpack-plugin": "0.0.38",
+    "postcss-brand-colors": "^0.4.0",
     "postcss-placehold": "^1.2.0",
     "reshape-standard": "^0.4.0",
     "spike-css-standards": "^0.1.1",

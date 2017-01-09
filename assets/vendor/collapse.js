@@ -5,11 +5,12 @@ angular.module('collapse', [])
       transclude: true,
       replace: true,
       scope: { title: '@'},
-      templateUrl: 'vendor/collapse.html',
+      templateUrl: '../vendor/collapse.html',
       controller: function ($scope, $element) {
-        $scope.opened = true;
+        $scope.open = false;
         return $scope.toggle = function () {
-          return $scope.opened = !$scope.opened;
+          console.log($scope)
+          return $scope.open = !$scope.open;
         };
       }
     }

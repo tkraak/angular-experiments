@@ -2,6 +2,7 @@ const path = require('path')
 const htmlStandards = require('reshape-standard')
 const cssStandards = require('spike-css-standards')
 const placehold = require('postcss-placehold')
+const brandColors = require('postcss-brand-colors')
 const jsStandards = require('babel-preset-latest')
 const pageId = require('spike-page-id')
 
@@ -21,7 +22,10 @@ module.exports = {
   },
   postcss: (ctx) => {
     const css = cssStandards({ webpack: ctx })
-    css.plugins.push(placehold())
+    css.plugins.push(brandColors())
+    css.plugins.unshift(placehold())
+    // console.log(css.plugins.length)
+    // console.log(css.plugins)
     return css
   },
   babel: { presets: [jsStandards] },
