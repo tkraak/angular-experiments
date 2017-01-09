@@ -1,8 +1,14 @@
 extends(src='layout.sgr')
   block(name='content')
 
-    div#tooltip(bs-tooltip='tooltip')
-      angular-dayparts(options='options')
+    // div#tooltip(bs-tooltip='tooltip')
+    .panel
+      .panel-heading
+        .panel-heading-left
+          h2 Dayparting
+          .panel-description Descriptive text. Note about time zones following DV formatting standards for internationalization.
+      .panel-body
+        angular-dayparts(options='options')
 
     div.well
       p
