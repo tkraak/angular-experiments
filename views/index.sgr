@@ -8,6 +8,15 @@ extends(src='layout.sgr')
           h2 Dayparting
           .panel-description Descriptive text. Note about time zones following DV formatting standards for internationalization.
       .panel-body
+        button(type='button' class='dropdown-trigger' bs-dropdown)
+          span All hours and days
+        ul(class='dropdown-menu' role='menu')
+          li
+            a(ng-click='#') Weekends (Sat-Sun)
+            a(ng-click='#') Weekdays (Mon-Fri)
+            a(ng-click='#') Business Hours (Mon-Fri, 9am-5pm)
+            a(ng-click='#') Evenings (6pm-12am)
+            a(ng-click='#') Custom
         angular-dayparts(options='options')
 
     div.well
