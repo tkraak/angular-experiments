@@ -25,6 +25,7 @@ html
     block(name='javascript')
       script(src='vendor/jquery.min.js')
       script(src='vendor/underscore-min.js')
+      script(src='vendor/moment.min.js')
       script(src='vendor/angular.min.js')
       script(src='vendor/angular-animate.min.js')
       script(src='vendor/angular-strap.min.js')

@@ -1,7 +1,6 @@
 extends(src='layout.sgr')
   block(name='content')
 
-    // div#tooltip(bs-tooltip='tooltip')
     .panel
       .panel-heading
         .panel-heading-left
@@ -12,16 +11,10 @@ extends(src='layout.sgr')
           span All hours and days
         ul(class='dropdown-menu' role='menu')
           li
-            a(ng-click='#') Weekends (Sat-Sun)
-            a(ng-click='#') Weekdays (Mon-Fri)
-            a(ng-click='#') Business Hours (Mon-Fri, 9am-5pm)
-            a(ng-click='#') Evenings (6pm-12am)
-            a(ng-click='#') Custom
+            a(ng-click="preset('weekend')") Weekends (Sat-Sun)
+            a(ng-click="preset('week')") Weekdays (Mon-Fri)
+            a(ng-click="businessHoursPreset('businessHours')") Business Hours (Mon-Fri, 9am-5pm)
+            a(ng-click="eveningHoursPreset('eveningHours')") Evenings (6pm-12am)
+            a(ng-click="customPreset('custom')") Custom
         angular-dayparts(options='options')
 
-    div.well
-      p
-        | Here is 
-        a(href='#'
-          bs-tooltip='tooltip'
-          data-placement='top') another tooltip.

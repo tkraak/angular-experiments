@@ -13,7 +13,15 @@ angular.module('angular-dayparts', [])
 
             console.log($scope.options);
 
-            $scope.days = [{name: 'monday', position: 1}, {name: 'tuesday', position: 2}, {name: 'wednesday', position: 3}, {name: 'thursday', position: 4}, {name: 'friday', position: 5}, {name: 'saturday', position: 6}, {name: 'sunday', position: 7}];
+          $scope.days = [
+            {name: 'monday', position: 1},
+            {name: 'tuesday', position: 2},
+            {name: 'wednesday', position: 3},
+            {name: 'thursday', position: 4},
+            {name: 'friday', position: 5},
+            {name: 'saturday', position: 6},
+            {name: 'sunday', position: 7}];
+
             $scope.hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24];
 
             var klass = 'selected';
@@ -22,6 +30,31 @@ angular.module('angular-dayparts', [])
             var selected = [];
             var isStartSelected = false;
 
+
+            $scope.$on('preset', function(event, day1, day2, day3, day4, day5) {
+                      $scope.reset();
+                      $scope.selectDay(day1);
+                      $scope.selectDay(day2);
+                      if (day3) {
+                        $scope.selectDay(day3);
+                        $scope.selectDay(day4);
+                        $scope.selectDay(day5);
+                      }
+                  })
+
+            $scope.$on('businessHours', function(event, businessHours) {
+              $scope.reset();
+              selectBusinessHours(businessHours);
+            })
+
+            $scope.$on('eveningHours', function(event, eveningHours) {
+              $scope.reset();
+              selectBusinessHours(eveningHours);
+            })
+
+            $scope.$on('custom', function(event) {
+              $scope.reset();
+            })
 
             if ($scope.options.selected) {
                 $timeout(function(){
@@ -175,6 +208,14 @@ angular.module('angular-dayparts', [])
                         $(el).addClass(klass);
                     }
                 });
+            }
+
+            function selectBusinessHours (hours) {
+              $element.find('td').each(function(i, el){
+                if (_.contains(hours, $(el).data('time'))) {
+                  $(el).addClass(klass);
+                }
+              });
             }
 
 
