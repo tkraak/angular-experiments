@@ -17,7 +17,8 @@ module.exports = {
   reshape: (ctx) => {
     return htmlStandards({
       webpack: ctx,
-      locals: { pageId: pageId(ctx), foo: 'bar' }
+      locals: { pageId: pageId(ctx), foo: 'bar' },
+      delimiters: ['[[', ']]'] // since angular uses {{ }}
     })
   },
   postcss: (ctx) => {
