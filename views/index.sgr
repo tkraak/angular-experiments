@@ -7,14 +7,6 @@ extends(src='layout.sgr')
           h2 Dayparting
           .panel-description Descriptive text. Note about time zones following DV formatting standards for internationalization.
       .panel-body
-        button(type='button' class='dropdown-trigger' bs-dropdown)
-          span All hours and days
-        ul(class='dropdown-menu' role='menu')
-          li
-            a(ng-click="preset('weekend')") Weekends (Sat-Sun)
-            a(ng-click="preset('week')") Weekdays (Mon-Fri)
-            a(ng-click="businessHoursPreset('businessHours')") Business Hours (Mon-Fri, 9am-5pm)
-            a(ng-click="eveningHoursPreset('eveningHours')") Evenings (6pm-12am)
-            a(ng-click="customPreset('custom')") Custom
+        select(ng-model='selectedItem' ng-options='item.value as item.label disable when item.disabled for item in items' ng-change='selectedItemChanged()')
         angular-dayparts(options='options')
 

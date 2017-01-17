@@ -11,9 +11,9 @@ angular.module('angular-dayparts', [])
             $scope.options = $scope.options || {};
             $scope.options.reset = ($scope.options.reset === undefined) ? true : $scope.options.reset;
 
-            console.log($scope.options);
+          console.log($scope.options.days);
 
-          $scope.days = [
+          $scope.days = $scope.options.days || [
             {name: 'monday', position: 1},
             {name: 'tuesday', position: 2},
             {name: 'wednesday', position: 3},
@@ -31,29 +31,39 @@ angular.module('angular-dayparts', [])
             var isStartSelected = false;
 
 
-            $scope.$on('preset', function(event, day1, day2, day3, day4, day5) {
-                      $scope.reset();
-                      $scope.selectDay(day1);
-                      $scope.selectDay(day2);
-                      if (day3) {
-                        $scope.selectDay(day3);
-                        $scope.selectDay(day4);
-                        $scope.selectDay(day5);
-                      }
-                  })
-
-            $scope.$on('businessHours', function(event, businessHours) {
-              $scope.reset();
-              selectBusinessHours(businessHours);
+            $scope.$on('allPreset', function(event, allPreset) {
+              $timeout(() => {
+                $scope.reset();
+                populatePreset(allPreset);
+              }, 100);
             })
 
-            $scope.$on('eveningHours', function(event, eveningHours) {
-              $scope.reset();
-              selectBusinessHours(eveningHours);
+            $scope.$on('weekendPreset', function(event, weekendPreset) {
+              $timeout(() => {
+                $scope.reset();
+                populatePreset(weekendPreset);
+              }, 100);
             })
 
-            $scope.$on('custom', function(event) {
-              $scope.reset();
+            $scope.$on('weekdaysPreset', function(event, weekdaysPreset) {
+              $timeout(() => {
+                $scope.reset();
+                populatePreset(weekdaysPreset);
+              }, 100);
+            })
+
+            $scope.$on('businessHoursPreset', function(event, businessHours) {
+              $timeout(() => {
+                $scope.reset();
+                populatePreset(businessHours);
+              }, 100);
+            })
+
+            $scope.$on('eveningHoursPreset', function(event, eveningHours) {
+              $timeout(() => {
+                $scope.reset();
+                populatePreset(eveningHours);
+              }, 100);
             })
 
             if ($scope.options.selected) {
@@ -210,9 +220,9 @@ angular.module('angular-dayparts', [])
                 });
             }
 
-            function selectBusinessHours (hours) {
+            function populatePreset (dayparts) {
               $element.find('td').each(function(i, el){
-                if (_.contains(hours, $(el).data('time'))) {
+                if (_.contains(dayparts, $(el).data('time'))) {
                   $(el).addClass(klass);
                 }
               });

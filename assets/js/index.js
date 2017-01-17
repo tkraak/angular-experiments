@@ -5,33 +5,18 @@ angular.module('app', ['angular-dayparts',
                        'mgcrea.ngStrap.tooltip'])
   .controller('MainCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
 
-    const businessHours = ["monday-9", "monday-10", "monday-11", "monday-12", "monday-13", "monday-14", "monday-15", "monday-16", "tuesday-9", "tuesday-10", "tuesday-11", "tuesday-12", "tuesday-13", "tuesday-14", "tuesday-15", "tuesday-16", "wednesday-9", "wednesday-10", "wednesday-11", "wednesday-12", "wednesday-13", "wednesday-14", "wednesday-15", "wednesday-16", "thursday-9", "thursday-10", "thursday-11", "thursday-12", "thursday-13", "thursday-14", "thursday-15", "thursday-16", "friday-9", "friday-10", "friday-11", "friday-12", "friday-13", "friday-14", "friday-15", "friday-16"] 
+    $scope.items = [
+      {"value":"all", "label":"All hours and days"},
+      {"value":"weekend", "label":"Weekends (Sat-Sun)"},
+      {"value":"weekdays", "label":"Weekdays (Mon-Fri)"},
+      {"value":"businessHours", "label":"Business Hours (Mon-Fri, 9am-5pm)"},
+      {"value":"eveningHours", "label":"Evenings (6pm-12pm)"},
+      {"value":"custom", "label":"Custom", disabled: true}
+    ];
 
-    const eveningHours = ["monday-18", "monday-19", "monday-20", "monday-21", "monday-22", "monday-23", "tuesday-18", "tuesday-19", "tuesday-20", "tuesday-21", "tuesday-22", "tuesday-23", "wednesday-18", "wednesday-19", "wednesday-20", "wednesday-21", "wednesday-22", "wednesday-23", "thursday-18", "thursday-19", "thursday-20", "thursday-21", "thursday-22", "thursday-23", "friday-18", "friday-19", "friday-20", "friday-21", "friday-22", "friday-23", "saturday-18", "saturday-19", "saturday-20", "saturday-21", "saturday-22", "saturday-23", "sunday-18", "sunday-19", "sunday-20", "sunday-21", "sunday-22", "sunday-23"]
+    $scope.selectedItem = $scope.items[0].value;
 
-    $scope.preset = function (preset) {
-      if (preset === 'weekend') {
-        $rootScope.$broadcast('preset', {name: 'saturday', position: 6}, {name: 'sunday', position: 7});
-      } else if (preset === 'week') {
-        $rootScope.$broadcast('preset', {name: 'monday', position: 1}, {name: 'tuesday', position: 2}, {name: 'wednesday', position: 3}, {name: 'thursday', position: 4}, {name: 'friday', position: 5});
-      } else if (preset === 'businessHours') {
-        $rootScope.$broadcast('preset', businessHours);
-      }
-    }
-
-    $scope.businessHoursPreset = function (preset) {
-      $rootScope.$broadcast('businessHours', businessHours);
-    }
-
-    $scope.eveningHoursPreset = function (preset) {
-      $rootScope.$broadcast('eveningHours', eveningHours);
-    }
-
-    $scope.customPreset = function (preset) {
-      $rootScope.$broadcast('custom');
-    }
-
-    var createDay = (day) => {
+    const getDay = (day) => {
       var days = [];
       for (var i = 0; i <= 23; i++) {
         days.push(day);
@@ -39,38 +24,77 @@ angular.module('app', ['angular-dayparts',
       return days;
     }
 
-    const monday = createDay('monday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const getDaypart = (day, start, end) => {
+      var part = [];
+      for (var i = start; i <= end; i++) {
+        part.push(`${day}-${i}`);
+      }
+      return part;
+    }
 
-    const tuesday = createDay('tuesday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const weekendPreset = function (sat, sun) {
+      var preset = sat.concat(sun);
+      return preset;
+    }
 
-    const wednesday = createDay('wednesday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const weekdayPreset = (mon, tue, wed, thur, fri) => {
+      var preset = mon.concat(tue, wed, thur, fri);
+      return preset;
+    }
 
-    const thursday = createDay('thursday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const weekPreset = (mon, tue, wed, thur, fri, sat, sun) => {
+      var preset = mon.concat(tue, wed, thur, fri, sat, sun);
+      return preset;
+    }
 
-    const friday = createDay('friday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const weekend = weekendPreset(getDaypart('saturday', 0, 23),
+                                  getDaypart('sunday', 0, 23));
 
-    const saturday = createDay('saturday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const weekdays = weekdayPreset(getDaypart('monday', 0, 23),
+                                   getDaypart('tuesday', 0, 23),
+                                   getDaypart('wednesday', 0, 23),
+                                   getDaypart('thursday', 0, 23),
+                                   getDaypart('friday', 0, 23));
 
-    const sunday = createDay('sunday').map((day, i) => {
-      return `${day}-${i}`;
-    })
+    const businessHours = weekdayPreset(getDaypart('monday', 9, 16),
+                                        getDaypart('tuesday', 9, 16),
+                                        getDaypart('wednesday', 9, 16),
+                                        getDaypart('thursday', 9, 16),
+                                        getDaypart('friday', 9, 16));
 
-    const week = monday.concat(tuesday, wednesday, thursday, friday, saturday, sunday);
+    const eveningHours = weekdayPreset(getDaypart('monday', 17, 23),
+                                       getDaypart('tuesday', 17, 23),
+                                       getDaypart('wednesday', 17, 23),
+                                       getDaypart('thursday', 17, 23),
+                                       getDaypart('friday', 17, 23),
+                                       getDaypart('saturday', 17, 23),
+                                       getDaypart('sunday', 17, 23));
+
+    const week = weekPreset(getDaypart('monday', 0, 23),
+                            getDaypart('tuesday', 0, 23),
+                            getDaypart('wednesday', 0, 23),
+                            getDaypart('thursday', 0, 23),
+                            getDaypart('friday', 0, 23),
+                            getDaypart('saturday', 0, 23),
+                            getDaypart('sunday', 0, 23));
+
+    $scope.selectedItemChanged = function () {
+      if ($scope.selectedItem === 'all') {
+        $rootScope.$broadcast('allPreset', week);
+      } else if ($scope.selectedItem === 'weekend') {
+        $rootScope.$broadcast('weekendPreset', weekend);
+      } else if ($scope.selectedItem === 'weekdays') {
+        $rootScope.$broadcast('weekdaysPreset', weekdays);
+      } else if ($scope.selectedItem === 'businessHours') {
+        $rootScope.$broadcast('businessHoursPreset', businessHours);
+      } else if ($scope.selectedItem === 'eveningHours') {
+        $rootScope.$broadcast('eveningHoursPreset', eveningHours);
+      }
+    }
+
 
     const days = moment.weekdays().map((day, i) => {
-      return { name: day, position: i + 1 };
+      return { name: day.toLowerCase(), position: i + 1 };
     })
 
     $scope.options = {
