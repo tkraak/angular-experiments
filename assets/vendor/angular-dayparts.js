@@ -6,12 +6,10 @@ angular.module('angular-dayparts', [])
             options: '=?'
         },
         templateUrl: 'template.html',
-        controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
+      controller: ['$rootScope', '$scope', '$element', '$attrs', function($rootScope, $scope, $element, $attrs) {
 
             $scope.options = $scope.options || {};
             $scope.options.reset = ($scope.options.reset === undefined) ? true : $scope.options.reset;
-
-          console.log($scope.options.days);
 
           $scope.days = $scope.options.days || [
             {name: 'monday', position: 1},
@@ -30,6 +28,70 @@ angular.module('angular-dayparts', [])
             var selected = [];
             var isStartSelected = false;
 
+
+            function daypartsEqual(selected, preset) {
+              if (selected.length !== preset.length)
+                return false;
+              for(var i = selected.length; i--;) {
+                if (selected[i] !== preset[i])
+                  return false;
+              }
+              return true;
+            }
+
+            const getDaypart = (day, start, end) => {
+              var part = [];
+              for (var i = start; i <= end; i++) {
+                part.push(`${day}-${i}`);
+              }
+              return part;
+            }
+
+            const weekendPreset = (sat, sun) => {
+              var preset = sat.concat(sun);
+              return preset;
+            }
+
+            const weekdayPreset = (mon, tue, wed, thur, fri) => {
+              var preset = mon.concat(tue, wed, thur, fri);
+              return preset;
+            }
+
+            const weekPreset = (mon, tue, wed, thur, fri, sat, sun) => {
+              var preset = mon.concat(tue, wed, thur, fri, sat, sun);
+              return preset;
+            }
+
+            const weekend = weekendPreset(getDaypart('sunday', 0, 23),
+                                          getDaypart('saturday', 0, 23));
+
+            const weekdays = weekdayPreset(getDaypart('monday', 0, 23),
+                                          getDaypart('tuesday', 0, 23),
+                                          getDaypart('wednesday', 0, 23),
+                                          getDaypart('thursday', 0, 23),
+                                          getDaypart('friday', 0, 23));
+
+            const businessHours = weekdayPreset(getDaypart('monday', 9, 16),
+                                                getDaypart('tuesday', 9, 16),
+                                                getDaypart('wednesday', 9, 16),
+                                                getDaypart('thursday', 9, 16),
+                                                getDaypart('friday', 9, 16));
+
+            const eveningHours = weekPreset(getDaypart('sunday', 17, 23),
+                                           getDaypart('monday', 17, 23),
+                                           getDaypart('tuesday', 17, 23),
+                                           getDaypart('wednesday', 17, 23),
+                                           getDaypart('thursday', 17, 23),
+                                           getDaypart('friday', 17, 23),
+                                           getDaypart('saturday', 17, 23));
+
+            const week = weekPreset(getDaypart('sunday', 0, 23),
+                                    getDaypart('monday', 0, 23),
+                                    getDaypart('tuesday', 0, 23),
+                                    getDaypart('wednesday', 0, 23),
+                                    getDaypart('thursday', 0, 23),
+                                    getDaypart('friday', 0, 23),
+                                    getDaypart('saturday', 0, 23));
 
             $scope.$on('allPreset', function(event, allPreset) {
               $timeout(() => {
@@ -65,6 +127,8 @@ angular.module('angular-dayparts', [])
                 populatePreset(eveningHours);
               }, 100);
             })
+
+            // $rootScope.$broadcast('customPreset');
 
             if ($scope.options.selected) {
                 $timeout(function(){
@@ -109,16 +173,29 @@ angular.module('angular-dayparts', [])
                         return item.day.name + '-' + item.time;
                     })
 
+                    if (daypartsEqual(selected, weekend)) {
+                      $rootScope.$broadcast('weekendPreset', weekend);
+                    } else if (daypartsEqual(selected, weekdays)) {
+                      $rootScope.$broadcast('weekdayPreset', weekdays);
+                    } else if (daypartsEqual(selected, businessHours)) {
+                      $rootScope.$broadcast('businessHoursPreset', businessHours);
+                    } else if (daypartsEqual(selected, eveningHours)) {
+                      $rootScope.$broadcast('eveningHoursPreset', eveningHours);
+                    } else if (daypartsEqual(selected, week)) {
+                      $rootScope.$broadcast('allPreset', week);
+                    }
+
                     $scope.options.onChange(selected);
                 }
             }
 
-
             /**
              * User start to click
+             * set option to Custom in preset <select>
              * @param {jQuery DOM element}
              */
             function mouseDown(el) {
+                $rootScope.$broadcast('customPreset');
                 isDragging = true;
                 setStartCell(el);
                 setEndCell(el);
@@ -226,11 +303,13 @@ angular.module('angular-dayparts', [])
                   $(el).addClass(klass);
                 }
               });
+              $scope.options.onChange(dayparts);
             }
 
 
             /**
              * Clicking on a day will select all hours
+             * and set option to Custom in preset <select>
              * @param  {object} day.name, day.position
              */
             $scope.selectDay = function(day) {
@@ -245,12 +324,14 @@ angular.module('angular-dayparts', [])
                         _addCell($(el));
                     }
                 });
+                $rootScope.$broadcast('customPreset');
                 onChangeCallback();
             };
 
 
             /**
              * Clicking on a hour will select all days at that hour
+             * and set option to Custom in preset <select>
              * @param  {int}
              */
             $scope.selectHour = function(hour) {
@@ -270,6 +351,7 @@ angular.module('angular-dayparts', [])
                         }
                     });
                 });
+                $rootScope.$broadcast('customPreset');
                 onChangeCallback();
             };
 

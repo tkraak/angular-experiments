@@ -47,8 +47,8 @@ angular.module('app', ['angular-dayparts',
       return preset;
     }
 
-    const weekend = weekendPreset(getDaypart('saturday', 0, 23),
-                                  getDaypart('sunday', 0, 23));
+    const weekend = weekendPreset(getDaypart('sunday', 0, 23),
+                                  getDaypart('saturday', 0, 23));
 
     const weekdays = weekdayPreset(getDaypart('monday', 0, 23),
                                    getDaypart('tuesday', 0, 23),
@@ -62,21 +62,21 @@ angular.module('app', ['angular-dayparts',
                                         getDaypart('thursday', 9, 16),
                                         getDaypart('friday', 9, 16));
 
-    const eveningHours = weekdayPreset(getDaypart('monday', 17, 23),
+    const eveningHours = weekPreset(getDaypart('sunday', 17, 23),
+                                       getDaypart('monday', 17, 23),
                                        getDaypart('tuesday', 17, 23),
                                        getDaypart('wednesday', 17, 23),
                                        getDaypart('thursday', 17, 23),
                                        getDaypart('friday', 17, 23),
-                                       getDaypart('saturday', 17, 23),
-                                       getDaypart('sunday', 17, 23));
+                                       getDaypart('saturday', 17, 23));
 
-    const week = weekPreset(getDaypart('monday', 0, 23),
+    const week = weekPreset(getDaypart('sunday', 0, 23),
+                            getDaypart('monday', 0, 23),
                             getDaypart('tuesday', 0, 23),
                             getDaypart('wednesday', 0, 23),
                             getDaypart('thursday', 0, 23),
                             getDaypart('friday', 0, 23),
-                            getDaypart('saturday', 0, 23),
-                            getDaypart('sunday', 0, 23));
+                            getDaypart('saturday', 0, 23));
 
     $scope.selectedItemChanged = function () {
       if ($scope.selectedItem === 'all') {
@@ -92,6 +92,30 @@ angular.module('app', ['angular-dayparts',
       }
     }
 
+
+    $scope.$on('allPreset', (e) => {
+      $scope.selectedItem = $scope.items[0].value;
+    })
+
+    $scope.$on('weekendPreset', (e) => {
+      $scope.selectedItem = $scope.items[1].value;
+    })
+
+    $scope.$on('weekdayPreset', (e) => {
+      $scope.selectedItem = $scope.items[2].value;
+    })
+
+    $scope.$on('businessHoursPreset', (e) => {
+      $scope.selectedItem = $scope.items[3].value;
+    })
+
+    $scope.$on('eveningHoursPreset', (e) => {
+      $scope.selectedItem = $scope.items[4].value;
+    })
+
+    $scope.$on('customPreset', (e) => {
+      $scope.selectedItem = $scope.items[5].value;
+    })
 
     const days = moment.weekdays().map((day, i) => {
       return { name: day.toLowerCase(), position: i + 1 };
