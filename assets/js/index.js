@@ -1,6 +1,4 @@
 angular.module('app', ['angular-dayparts',
-                       'collapse',
-                       'ngAnimate',
                        'mgcrea.ngStrap',
                        'mgcrea.ngStrap.tooltip'])
   .controller('MainCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
@@ -15,14 +13,6 @@ angular.module('app', ['angular-dayparts',
     ];
 
     $scope.selectedItem = $scope.items[0].value;
-
-    const getDay = (day) => {
-      var days = [];
-      for (var i = 0; i <= 23; i++) {
-        days.push(day);
-      };
-      return days;
-    }
 
     const getDaypart = (day, start, end) => {
       var part = [];

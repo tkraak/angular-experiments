@@ -128,8 +128,6 @@ angular.module('angular-dayparts', [])
               }, 100);
             })
 
-            // $rootScope.$broadcast('customPreset');
-
             if ($scope.options.selected) {
                 $timeout(function(){
                     repopulate($scope.options.selected);

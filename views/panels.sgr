@@ -1,6 +1,7 @@
 extends(src='layout.sgr')
-  block(name='title')
+  block(name='seo')
     title Panels
+    meta(name='description' content='Experimenting with Angular directives.')
   block(name='content')
     .col-md-6
       collapse(title='Directive Title')

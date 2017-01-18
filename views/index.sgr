@@ -1,12 +1,15 @@
 extends(src='layout.sgr')
+  block(name='seo')
+    title Dayparts
+    meta(name='description' content='Experimenting with Angular Dayparts.')
   block(name='content')
 
-    .panel
-      .panel-heading
-        .panel-heading-left
-          h2 Dayparting
-          .panel-description Descriptive text. Note about time zones following DV formatting standards for internationalization.
-      .panel-body
-        select(ng-model='selectedItem' ng-options='item.value as item.label disable when item.disabled for item in items' ng-change='selectedItemChanged()')
-        angular-dayparts(options='options')
+    .row
+      .col-md-6
+        .panel.panel-default
+          .panel-heading
+              h2.panel-title Angular Dayparts
+          .panel-body
+            select(class='form-control' ng-model='selectedItem' ng-options='item.value as item.label disable when item.disabled for item in items' ng-change='selectedItemChanged()')
+            angular-dayparts(options='options')
 

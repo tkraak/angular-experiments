@@ -4,18 +4,15 @@ html
     block(name='meta')
       meta(charset='utf-8')
       meta(http-equiv='X-UA-Compatible' content='IE=edge, chrome=1')
-      meta(name='description' content='')
       meta(name='author' content='Tom Kraak')
       meta(name="viewport" content="width=device-width, initial-scale=1")
 
-    block(name='title')
-      title Dayparts 
+    block(name='seo')
 
     block(name='stylesheets')
       link(rel='stylesheet' href='vendor/bootstrap.min.css')
       link(rel='stylesheet' href='vendor/bootstrap-additions.min.css')
       link(rel='stylesheet' href='vendor/angular-motion.min.css')
-      link(rel='stylesheet' href='vendor/one-components.css')
       link(rel='stylesheet' href='css/index.css')
 
   body(role='document' ng-controller='MainCtrl')
