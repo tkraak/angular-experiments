@@ -77,13 +77,13 @@ angular.module('angular-dayparts', [])
                                                 getDaypart('thursday', 9, 16),
                                                 getDaypart('friday', 9, 16));
 
-            const eveningHours = weekPreset(getDaypart('sunday', 17, 23),
-                                           getDaypart('monday', 17, 23),
-                                           getDaypart('tuesday', 17, 23),
-                                           getDaypart('wednesday', 17, 23),
-                                           getDaypart('thursday', 17, 23),
-                                           getDaypart('friday', 17, 23),
-                                           getDaypart('saturday', 17, 23));
+            const eveningHours = weekPreset(getDaypart('sunday', 18, 23),
+                                           getDaypart('monday', 18, 23),
+                                           getDaypart('tuesday', 18, 23),
+                                           getDaypart('wednesday', 18, 23),
+                                           getDaypart('thursday', 18, 23),
+                                           getDaypart('friday', 18, 23),
+                                           getDaypart('saturday', 18, 23));
 
             const week = weekPreset(getDaypart('sunday', 0, 23),
                                     getDaypart('monday', 0, 23),
